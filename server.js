@@ -2,6 +2,7 @@ const express=require('express')
 const serverConfig=require('./configs/server.config')
 const mongoose=require('mongoose')
 const dbConfig=require('./configs/db.config')
+const userModel=require('./models/user.model')
 
 const app=express()
 
@@ -15,7 +16,33 @@ db.on("error",()=>{
 
 db.once("open",()=>{
     console.log("DB is connected")
+    init()
+
 })
+
+async function init(){
+  // check admin user is present
+  let admin= await userModel.findOne({
+    userId:"admin"
+  })
+  if(admin){
+    console.log("Admin user already present")
+    return
+  }
+    // initialize the mongodb
+    //Need to create  admin user
+
+    
+    admin = await userModel.create({
+        name: "Arnab Mandal",
+        userId:"admin",
+        email:"mandal.arnab2004@gmail.com",
+        userType:"ADMIN",
+        password:"welcome"
+    });
+    console.log(admin)
+}
+
 
 app.listen(serverConfig.PORT,()=>{
     console.log(`Surver started on the port number ${serverConfig.PORT}`)

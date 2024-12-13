@@ -3,8 +3,8 @@
 const mongoose=require('mongoose')
 const userSchema=new mongoose.Schema({
     name:{
-        typr:String,
-        require:true
+        type:String,
+        required:true
     },
     userId:{
         type:String,
@@ -12,18 +12,18 @@ const userSchema=new mongoose.Schema({
         unique:true
     },
     password:{
-        typr: String,
+        type: String,
         required:true
     },
     email:{
-        typr: String,
+        type: String,
         required:true,
         unique:true,
         minlength:10,
         lowercase:true
     },
     userType:{
-        typr: String,
+        type: String,
         required:true,
         default:"CUSTOMER",
         enum:["CUSTOMER","ADMIN"]
