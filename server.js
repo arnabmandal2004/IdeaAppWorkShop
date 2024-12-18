@@ -3,6 +3,7 @@ const serverConfig=require('./configs/server.config')
 const mongoose=require('mongoose')
 const dbConfig=require('./configs/db.config')
 const userModel=require('./models/user.model')
+const bcrypt=require('bcrypt')
 
 const app=express()
 
@@ -21,7 +22,7 @@ db.once("open",()=>{
 })
 
 async function init(){
-  // check admin user is present
+    // check admin user is present
   let admin= await userModel.findOne({
     userId:"admin"
   })
@@ -38,7 +39,7 @@ async function init(){
         userId:"admin",
         email:"mandal.arnab2004@gmail.com",
         userType:"ADMIN",
-        password:"welcome"
+        password: bcrypt.hashSync("welcome",8)
     });
     console.log(admin)
 }
